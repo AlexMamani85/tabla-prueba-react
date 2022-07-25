@@ -11,14 +11,38 @@ function App() {
     
     fetch('https://randomuser.me/api/?page=3&results=45&seed=abc', options)
       .then(response => response.json())
-      .then(response => setUsers(response))
+      .then(response => setUsers(response.results))
       .catch(err => console.error(err));
   }
-
-  fetchData();
+  const info = React.useRef([]);
   
+  React.useEffect(() => {
+    fetchData();
+  }, []);
+
+  React.useEffect(() => {
+    info.current = users.map((user)=>{
+      return {nombre: user.name.first,
+              apellido: user.name.last,
+              edad: user.dob.age,
+              genero: user.gender,
+              email: user.email,
+              nacionalidad: user.nat,
+              foto: user.picture.thumbnail,}
+    });
+
+  }, [users]);
+
+
+
+
   // setUsers(fetchData());
   console.log(users);
+
+
+  console.log(info);
+  console.log(info.current);
+
 const data = [
   {
     id: 1,
@@ -38,24 +62,41 @@ const data = [
 ]
 const columns = [
   {
-  name: 'ID',
-  selector: row => row.age
+  name: 'NOMBRE',
+  selector: row => row.nombre
   },
     {
-  name: 'NAME',
-  selector: row => row.age
+  name: 'APELLIDO',
+  selector: row => row.apellido
   },
     {
-  name: 'AGE',
-  selector: row => row.age
+  name: 'EDAD',
+  selector: row => row.edad
   },
+  {
+  name: 'GENERO',
+  selector: row => row.genero
+  },
+    {
+  name: 'EMAIL',
+  selector: row => row.email
+  },
+    {
+  name: 'NACIONALIDAD',
+  selector: row => row.nacionalidad
+  },
+  {
+  name: 'FOTO',
+  selector: row => row.foto
+  },
+  
 ]
 
   return (
     <div className="App">
       <DataTable
         columns={columns}
-        data={data}
+        data={info.current}
         
       ></DataTable>
     </div>
