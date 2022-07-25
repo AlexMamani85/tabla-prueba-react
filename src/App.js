@@ -1,4 +1,5 @@
-import DataTable from 'react-data-table-component'
+
+import DataTable, { createTheme } from 'react-data-table-component';
 import React from 'react'
 import './App.css';
 
@@ -33,71 +34,47 @@ function App() {
 
   }, [users]);
 
-
-
-
-  // setUsers(fetchData());
-  console.log(users);
-
-
-  console.log(info);
-  console.log(info.current);
-
-const data = [
-  {
-    id: 1,
-    name: 'Juan Carlos',
-    age: 25
-  },
-    {
-    id: 2,
-    name: 'Martina',
-    age: 29
-  },
-    {
-    id: 3,
-    name: 'Canelaria',
-    age: 36
-  }
-]
-const columns = [
-  {
-  name: 'NOMBRE',
-  selector: row => row.nombre
-  },
-    {
-  name: 'APELLIDO',
-  selector: row => row.apellido
-  },
-    {
-  name: 'EDAD',
-  selector: row => row.edad
-  },
-  {
-  name: 'GENERO',
-  selector: row => row.genero
-  },
-    {
-  name: 'EMAIL',
-  selector: row => row.email
-  },
-    {
-  name: 'NACIONALIDAD',
-  selector: row => row.nacionalidad
-  },
-  {
-  name: 'FOTO',
-  selector: row => row.foto
-  },
   
+const columns = [
+  {name: 'NOMBRE', selector: row => row.nombre},
+  {name: 'APELLIDO', selector: row => row.apellido},
+  {name: 'EDAD', selector: row => row.edad},
+  {name: 'GENERO', selector: row => row.genero},
+  {name: 'EMAIL', selector: row => row.email},
+  {name: 'NACIONALIDAD', selector: row => row.nacionalidad},
+  {name: 'FOTO',selector: row => row.foto},  
 ]
+
+createTheme('solarized', {
+  text: {
+    primary: '#002b36',
+    secondary: '#2aa198',
+  },
+  background: {
+    default: '#268bd2',
+  },
+  context: {
+    background: '#cb4b16',
+    text: '#FFFFFF',
+  },
+  divider: {
+    default: '#073642',
+  },
+  action: {
+    button: 'rgba(0,0,0,.54)',
+    hover: 'rgba(0,0,0,.08)',
+    disabled: 'rgba(0,0,0,.12)',
+  },
+}, 'dark');
+
 
   return (
     <div className="App">
       <DataTable
         columns={columns}
         data={info.current}
-        
+        theme="solarized"
+        pagination
       ></DataTable>
     </div>
   );
